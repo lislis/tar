@@ -1,8 +1,24 @@
+@font-face {
+    font-family: 'Junction';
+    src: url('junction-bold.eot');
+    src: url('junction-bold.eot?#iefix') format('embedded-opentype'),
+         url('junction-bold.woff') format('woff'),
+         url('junction-bold.ttf') format('truetype'),
+         url('junction-bold.svg#junctionbold') format('svg');
+    font-weight: bold;
+    font-style: normal;
+}
+
+html, body {
+  font-family: Junction, sans-serif;
+  font-weight: bold;
+}
+
 #intro {
   position: fixed;
   width: 100vw;
   height: 100vh;
-  background: rgba(232, 118, 218, 0.8);
+  background: rgba(232, 118, 218, 1);
   z-index: 1;
   text-align: center;
 }
