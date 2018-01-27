@@ -1,0 +1,13 @@
+#intro {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(232, 118, 218, 0.8);
+  z-index: 1;
+  text-align: center;
+}
+
+button {
+  padding: .5em 1em;
+  font-size: 2em;
+}

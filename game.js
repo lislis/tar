@@ -22,9 +22,8 @@ function onMIDIFailure(error) {
   console.log("No access to MIDI devices or your browser doesn't support WebMIDI API. Please use WebMIDIAPIShim " + error);
 }
 
-
-
 function frame(dt) {
+  midi.lp
   let pos = cam.getAttribute('position');
   cam.setAttribute('position', {x: pos.x, y: pos.y, z: pos.z - speedFactor } );
   raf = window.requestAnimationFrame(frame);
@@ -35,3 +34,11 @@ function frame(dt) {
 function cancelFrame(id) {
   window.cancelAnimationFrame(id);
 }
+
+
+
+// intro screen
+document.querySelector('#intro button').addEventListener('click', () => {
+  document.querySelector('body').removeChild(document.querySelector('#intro'));
+  frame();
+});
