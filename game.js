@@ -4,7 +4,7 @@ var midi;
 var strength = 100;
 var score = 0;
 var endScore = 0;
-var speedFactor = 0.03;
+var speedFactor = 0.1;
 
 var cam = document.getElementById('camera');
 var light = document.getElementById('light');
@@ -43,7 +43,7 @@ function rightColor() {
   // map to necessary light color
   var matchMap = {
     '#ff0000': '#00ff00',
-    '#ffd700': '#ffd700',
+    '#ffff00': '#dddd00',
     '#00ff00': '#ff0000'
   };
   let boxColor = boxZ.getAttribute('color');
@@ -94,6 +94,8 @@ function frame(dt) {
 
     if (!rightColor()) {
       updateStrength();
+      midi.lp.illuminateGrid();
+      speedFactor += 0.01;
     }
 
     updateBoxZ();

@@ -1,25 +1,26 @@
 @font-face {
-    font-family: 'Junction';
-    src: url('junction-bold.eot');
-    src: url('junction-bold.eot?#iefix') format('embedded-opentype'),
-         url('junction-bold.woff') format('woff'),
-         url('junction-bold.ttf') format('truetype'),
-         url('junction-bold.svg#junctionbold') format('svg');
-    font-weight: bold;
+    font-family: 'KnewaveRegular';
+    src: url('knewave-webfont.eot');
+    src: url('knewave-webfont.eot?#iefix') format('embedded-opentype'),
+         url('knewave-webfont.woff') format('woff'),
+         url('knewave-webfont.ttf') format('truetype');
+    font-weight: normal;
     font-style: normal;
 }
 
-html, body {
-  font-family: Junction, sans-serif;
-  font-weight: bold;
+html {
+  font-family: KnewaveRegular, sans-serif;
+  font-weight: normal;
+  font-size: 32px;
 }
 
 #intro, #gameover {
   position: fixed;
   width: 100vw;
   height: 100vh;
-  background: rgba(232, 118, 218, 1);
-  z-index: 1;
+  padding: 2em 0;
+  background: darkgrey;
+  z-index: 9000;
   text-align: center;
 }
 
@@ -27,7 +28,21 @@ html, body {
   display: none;
 }
 
-button {
-  padding: .5em 1em;
-  font-size: 2em;
+.btn {
+  font-family: inherit;
+  padding: .6em 1em .4em;
+  font-size: 1em;
+  background: white;
+  border: none;
+  line-height: 1;
+  border-radius: 5px;
+}
+.btn:hover,
+.btn:active {
+  background: grey;
+  color: white;
+}
+
+.a-enter-vr-button {
+  z-index: 8000 !important;
 }
