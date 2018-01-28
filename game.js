@@ -3,6 +3,7 @@ var midi;
 
 var strength = 100;
 var score = 0;
+var endScore = 0;
 var speedFactor = 0.03;
 
 var cam = document.getElementById('camera');
@@ -27,29 +28,77 @@ function onMIDIFailure(error) {
 
 var boxZ = document.querySelector('.box');
 var scoreBoard =  document.querySelector('#score');
-var strength =  document.querySelector('#hud');
+var strengthBoard =  document.querySelector('#hud');
+
+function passBarrier() {
+  if (boxZ !== null) {
+    return cam.getAttribute('position').z <= boxZ.getAttribute('position').z;
+  } else {
+    checkForEnd();
+  }
+}
+
+function rightColor() {
+  // access key of barrier
+  // map to necessary light color
+  var matchMap = {
+    '#ff0000': '#00ff00',
+    '#ffd700': '#ffd700',
+    '#00ff00': '#ff0000'
+  };
+  let boxColor = boxZ.getAttribute('color');
+  let lightColor = midi.entity.getAttribute('light').color;
+
+  return matchMap[boxColor] === lightColor;
+}
+
+function updateBoxZ() {
+  if (boxZ.parentNode) {
+    boxZ.parentNode.removeChild(boxZ);
+  }
+
+  let newBox = document.querySelector('.box');
+  if (newBox) {
+    boxZ = newBox;
+  } else {
+    boxZ = null;
+  }
+}
+
+function updateScore() {
+  score ++;
+  scoreBoard.setAttribute('text', 'value', `Barriers passed: ${score}`);
+}
+
+function updateStrength() {
+  strength -= 10;
+  strengthBoard.setAttribute('text', 'value', `Strength remaining: ${strength}`);
+}
+
+function checkForEnd() {
+  if (strength < 0 || boxZ === null) {
+    endScore = score * strength;
+    cancelFrame(raf);
+    document.querySelector('#highscore').innerHTML = endScore;
+    document.querySelector('#gameover').classList.remove('hidden');
+  }
+}
+
 
 function frame(dt) {
   let pos = cam.getAttribute('position');
   cam.setAttribute('position', {x: pos.x, y: pos.y, z: pos.z - speedFactor } );
-  //console.log(Math.floor(dt) % 1000);
 
-  if (cam.getAttribute('position').z <= boxZ.getAttribute('position').z) {
-    console.log(cam);
-    boxZ.parentNode.removeChild(boxZ);
-    score ++;
-    scoreBoard.setAttribute('text', 'value', `Barriers passed: ${score}`);
+  if (passBarrier()) {
+    updateScore();
 
-    // get current light color
-    // get color of barriers
-    // calculate damage to strength
-    // if strength < 0 -> end game
+    if (!rightColor()) {
+      updateStrength();
+    }
 
-    let newBox = document.querySelector('.box');
-    if (newBox) {
-      boxZ = newBox;
-    } // else end game?
+    updateBoxZ();
   }
+  checkForEnd();
 
   raf = window.requestAnimationFrame(frame);
 }
@@ -58,13 +107,8 @@ function cancelFrame(id) {
   window.cancelAnimationFrame(id);
 }
 
-// intro screen
 document.querySelector('#intro button').addEventListener('click', () => {
   document.querySelector('body').removeChild(document.querySelector('#intro'));
   frame();
   midi.lp.illuminateGrid();
 });
-
-
-// end screen
-// highscore strength times barriers

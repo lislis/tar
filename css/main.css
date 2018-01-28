@@ -14,13 +14,17 @@ html, body {
   font-weight: bold;
 }
 
-#intro {
+#intro, #gameover {
   position: fixed;
   width: 100vw;
   height: 100vh;
   background: rgba(232, 118, 218, 1);
   z-index: 1;
   text-align: center;
+}
+
+.hidden {
+  display: none;
 }
 
 button {
